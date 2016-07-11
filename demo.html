@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>fullPage - Demo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="fullPage,webApp,full screen">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="./slider.css">
+</head>
+<body>
+<div id="article">
+    <div class="page section1 current">
+        <div class="contain">
+            66666666666666666
+        </div>
+    </div>
+
+    <div class="page section2">
+        <div class="contain">
+            99999999999999
+        </div>
+    </div>
+
+    <div class="page section3">
+        <div class="contain">
+            1010101010101010
+        </div>
+    </div>
+
+    <div class="page section4">
+        <div class="contain">
+            0101010101010101
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="./slider.js"></script>
+<script>
+    var s = new slider({
+        id: "article",
+        durationTime: 1000,
+        animate: {
+            transform: {
+                scale: [1, 1],
+                rotate: [0, 0]
+            },
+            opacity: [0, 1],
+            easing: [0, .93, .39, .98]
+        },
+        callback: function(index){
+            //todo  what you want
+            console.log(index);
+        }
+    }).init();
+</script>
+</body>
+</html>
