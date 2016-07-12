@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./slider.css">
 </head>
 <body>
-<div id="article">
+<div id="wraper">
     <div class="page section1 current">
         <div class="contain">
             66666666666666666
@@ -37,17 +37,18 @@
 <script type="text/javascript" src="./slider.js"></script>
 <script>
     var s = new slider({
-        id: "article",
-        durationTime: 1000,
+        id: "wraper",//外围的父容器
+        durationTime: 1000,//滑屏时间 默认为800
+        slide:false,//是否允许用户拖动
         animate: {
-            transform: {
+            transform: {//滑屏时的transform变化
                 scale: [1, 1],
                 rotate: [0, 0]
             },
-            opacity: [0, 1],
-            easing: [0, .93, .39, .98]
+            opacity: [0, 1],//滑屏时的透明度变化
+            easing: [0, .93, .39, .98]//动画的贝塞尔曲线
         },
-        callback: function(index){
+        callback: function(index){//滑动到当前index的回调
             //todo  what you want
             console.log(index);
         }
