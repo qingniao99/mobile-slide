@@ -1,9 +1,3 @@
-/*
- TransitionDuration
- Transform
- TransformOrigin
- TransitionTimingFunction
- */
 !function (window, document, undefined) {
 
     var browserInfo = {
@@ -30,8 +24,10 @@
         this.zIndex = 1;
         this.done = true;
         this.direct = 0;
-        this.duration = options.durationTime || 800;
-        this.callback = options.callback || function(){};
+        this.slide = options.slide || false, this.duration = options.durationTime || 800;
+        this.callback = options.callback || function () {
+            };
+        this.animate = options.animate;
 
         this.start = function (e) {
             if (!this.done) return;
@@ -45,13 +41,11 @@
             this.prev = this.currentIndex - 1;
             this.next = this.currentIndex + 1;
             if (this.prev >= 0) {
-                //this.pageArr[this.prev].style[browserInfo.prefix + 'TransitionDuration'] = '0ms';
                 this.pageArr[this.prev].style[browserInfo.prefix + 'Transform'] = 'translate(0,-' + browserInfo.height + 'px) translateZ(0)';
                 this.pageArr[this.prev].style[browserInfo.prefix + 'TransformOrigin'] = '50% 50%';
                 this.addClass("static", this.prev);
             }
             if (this.next <= this.pageMax - 1) {
-                //this.pageArr[this.next].style[browserInfo.prefix + 'TransitionDuration'] = '0ms';
                 this.pageArr[this.next].style[browserInfo.prefix + 'Transform'] = 'translate(0,' + browserInfo.height + 'px) translateZ(0)';
                 this.pageArr[this.next].style[browserInfo.prefix + 'TransformOrigin'] = '50% 50%';
                 this.addClass("static", this.next);
@@ -62,12 +56,43 @@
 
         this.move = function (e) {
             if (e.targetTouches.length != 1) return;
+            var diffScale = 1;
+            var diffOpacity = 1;
+            var diffRotate = 1;
             var touch = e.targetTouches[0];
             this.movePos = {
                 x: touch.pageX,
                 y: touch.pageY
             }
+            if (this.slide) {
 
+                var diffPos = {
+                    x: Math.abs(touch.pageX - this.startPos.x),
+                    y: Math.abs(touch.pageY - this.startPos.y)
+                }
+
+                if (this.animate.transform && this.animate.transform.scale) {
+                    diffScale = this.animate.transform.scale[1] - this.animate.transform.scale[0];
+                }
+
+                if (this.animate.transform && this.animate.transform.rotate) {
+                    diffRotate = this.animate.transform.rotate[1] - this.animate.transform.rotate[0];
+                }
+
+                if (this.animate.opacity) {
+                    diffOpacity = this.animate.opacity[1] - this.animate.opacity[0];
+                }
+
+                if (this.prev >= 0 && Math.abs(touch.pageY) - Math.abs(this.startPos.y) > 0) {
+                    this.pageArr[this.prev].style.opacity = diffOpacity * diffPos.y / browserInfo.height;
+                    this.setStyle3(this.pageArr[this.prev], 'Transform', "translate(0," + (diffPos.y * 2.5 - browserInfo.height) + "px) translateZ(0) " + "rotate(" + diffRotate * diffPos.y / browserInfo.height + "deg) scale(" + diffScale * diffPos.y / browserInfo.height + ")");
+                }
+                if (this.next <= this.pageMax - 1 && Math.abs(touch.pageY) - Math.abs(this.startPos.y) < 0) {
+                    this.pageArr[this.next].style.opacity = diffOpacity * diffPos.y / browserInfo.height;
+                    this.setStyle3(this.pageArr[this.next], 'Transform', "translate(0," + (browserInfo.height - diffPos.y * 2.5) + "px) translateZ(0) " + "rotate(" + diffRotate * diffPos.y / browserInfo.height + "deg) scale(" + diffScale * diffPos.y / browserInfo.height + ")");
+                }
+
+            }
         }.bind(this)
 
         this.end = function (e) {
@@ -100,22 +125,26 @@
                 this.replaceClass("static", "slide", this.newIndex);
             }
 
-            this.setStyle3(this.pageArr[this.newIndex],'TransitionDuration',this.duration+"ms");
-            this.setStyle3(this.pageArr[this.newIndex],'Transform',"translate(0,0) translateZ(0)");
-            setTimeout(function(){
+            this.setStyle3(this.pageArr[this.newIndex], 'TransitionDuration', this.duration + "ms");
+            this.setStyle3(this.pageArr[this.newIndex], 'Transform', "translate(0,0) translateZ(0) rotate(360deg) scale(1)");
+            this.setStyle3(this.pageArr[this.newIndex], 'Opacity', "1");
+            setTimeout(function () {
                 this.removeClass("current", this.currentIndex);
-                this.currentIndex = this.newIndex;this.replaceClass("slide","current",this.currentIndex);
+                this.currentIndex = this.newIndex;
+                this.replaceClass("slide", "current", this.currentIndex);
                 this.callback(this.currentIndex);
                 this.done = true;
-            }.bind(this),666);
+            }.bind(this), this.duration + 123);
         }
 
     }
 
     slider.prototype.init = function (index) {
+
         document.body.addEventListener("touchmove", function (e) {
             e.preventDefault();
         }, false);
+
         this.pageWrap.style.height = browserInfo.height + "px";
         if (typeof this.options.animate.easing === 'string') {
             switch (this.options.animate.easing) {

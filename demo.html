@@ -39,14 +39,14 @@
     var s = new slider({
         id: "wraper",//外围的父容器
         durationTime: 1000,//滑屏时间 默认为800
-        slide:false,//是否允许用户拖动
+        slide:true,//是否允许用户拖动
         animate: {
             transform: {//滑屏时的transform变化
-                scale: [1, 1],
-                rotate: [0, 0]
+                scale: [0, 1],
+                rotate: [0, 340]
             },
             opacity: [0, 1],//滑屏时的透明度变化
-            easing: [0, .93, .39, .98]//动画的贝塞尔曲线
+            easing: "ease-in"//动画的贝塞尔曲线,linear,ease-in,ease-in-out,ease-out,ease
         },
         callback: function(index){//滑动到当前index的回调
             //todo  what you want
