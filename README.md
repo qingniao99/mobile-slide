@@ -8,6 +8,7 @@ mobile slide screen for activities fast
 var s = new slider({
         id: "wraper",//外围的父容器
         durationTime: 1000,//滑屏时间 默认为800
+        enhance:true,//是否开启透明度，旋转和缩放过度
         slide:true,//是否允许用户拖动
         animate: {
             transform: {//滑屏时的transform变化
