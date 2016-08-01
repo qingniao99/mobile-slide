@@ -1,7 +1,7 @@
 # mobile-slide
 mobile slide screen for activities fast
 
-参考的[大神级repo2](https://github.com/hahnzhu/parallax.js),[大神级repo1](https://github.com/powy1993/fullpage),[大神级repo3](https://github.com/yanhaijing/zepto.fullpage)
+参考的[大神级repo](https://github.com/powy1993/fullpage)
 
 快速迭代移动端滑屏运营活动
 ```javascript
