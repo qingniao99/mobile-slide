@@ -112,12 +112,11 @@
             }
 
             //if (Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 0 && Math.abs(Math.abs(this.endPos.y) - Math.abs(this.startPos.y)) > 0.05 * browserInfo.height) {
-            if (Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 0) {
+            if (Math.abs(this.startPos.y) - Math.abs(this.endPos.y) > 33) {
                 this.direct = -1
-            } else {
+            } else if(Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 33) {
                 this.direct = 1;
-            }
-            if (this.direct == 0) {
+            }else{
                 this.removeClass("static", this.prev);
                 this.removeClass("static", this.next);
                 return;
@@ -196,6 +195,16 @@
         return this;
     }
 
+    slider.prototype.hexieIndex = function(index){
+        if(index<0){
+            return 0;
+        }
+        if(index>this.pageArr.length-1){
+            return this.pageArr.length-1;
+        }
+        return index;
+    }
+
     slider.prototype.setCubic = function (a, b, c, d) {
         this.cubicCurve.A = a;
         this.cubicCurve.B = b;
@@ -209,7 +218,7 @@
     }
 
     slider.prototype.addClass = function (cla, index) {
-        var className = this.pageArr[index].className;
+        var className = this.pageArr[this.hexieIndex(index)].className;
         if (new RegExp(cla, "g").test(className)) {
             return this.pageArr[index];
         } else {
@@ -220,7 +229,7 @@
     }
 
     slider.prototype.removeClass = function (cla, index) {
-        var className = this.pageArr[index].className;
+        var className = this.pageArr[this.hexieIndex(index)].className;
         if (!new RegExp(cla, "g").test(className)) {
             return this.pageArr[index];
         } else {
@@ -231,7 +240,7 @@
     }
 
     slider.prototype.replaceClass = function (cla, xcla, index) {
-        var className = this.pageArr[index].className;
+        var className = this.pageArr[this.hexieIndex(index)].className;
         if (!new RegExp(cla, "g").test(className)) {
             return this.pageArr[index];
         } else {
