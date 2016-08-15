@@ -113,9 +113,9 @@
 
             //if (Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 0 && Math.abs(Math.abs(this.endPos.y) - Math.abs(this.startPos.y)) > 0.05 * browserInfo.height) {
             if (Math.abs(this.startPos.y) - Math.abs(this.endPos.y) > 33) {
-                this.direct = -1
+                this.direct = 1
             } else if(Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 33) {
-                this.direct = 1;
+                this.direct = -1;
             }else{
                 this.removeClass("static", this.prev);
                 this.removeClass("static", this.next);
