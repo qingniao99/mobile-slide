@@ -88,16 +88,16 @@
                 if (this.prev >= 0 && Math.abs(touch.pageY) - Math.abs(this.startPos.y) > 0) {
                     if(this.enhance){
                         this.pageArr[this.prev].style.opacity = this.diffOpacity * diffPos.y / browserInfo.height;
-                        this.setStyle3(this.pageArr[this.prev], 'Transform', "translate(0," + (diffPos.y * 2.5 - browserInfo.height) + "px) translateZ(0) " + "rotate(" + this.diffRotate * diffPos.y / browserInfo.height + "deg) scale(" + this.diffScale * diffPos.y / browserInfo.height + ")");
+                        this.setStyle3(this.pageArr[this.prev], 'transform', "translate(0," + (diffPos.y * 2.5 - browserInfo.height) + "px) translateZ(0) " + "rotate(" + this.diffRotate * diffPos.y / browserInfo.height + "deg) scale(" + this.diffScale * diffPos.y / browserInfo.height + ")");
                     }else{
-                        this.setStyle3(this.pageArr[this.prev], 'Transform', "translate(0," + (diffPos.y * 2.5 - browserInfo.height) + "px) translateZ(0) ");
+                        this.setStyle3(this.pageArr[this.prev], 'transform', "translate(0," + (diffPos.y * 2.5 - browserInfo.height) + "px) translateZ(0) ");
                     }
                 }else if (this.next <= this.pageMax - 1 && Math.abs(touch.pageY) - Math.abs(this.startPos.y) < 0) {
                     if(this.enhance){
                         this.pageArr[this.next].style.opacity = this.diffOpacity * diffPos.y / browserInfo.height;
-                        this.setStyle3(this.pageArr[this.next], 'Transform', "translate(0," + (browserInfo.height - diffPos.y * 2.5) + "px) translateZ(0) " + "rotate(" + this.diffRotate * diffPos.y / browserInfo.height + "deg) scale(" + this.diffScale * diffPos.y / browserInfo.height + ")");
+                        this.setStyle3(this.pageArr[this.next], 'transform', "translate(0," + (browserInfo.height - diffPos.y * 2.5) + "px) translateZ(0) " + "rotate(" + this.diffRotate * diffPos.y / browserInfo.height + "deg) scale(" + this.diffScale * diffPos.y / browserInfo.height + ")");
                     }else{
-                        this.setStyle3(this.pageArr[this.next], 'Transform', "translate(0," + (browserInfo.height - diffPos.y * 2.5) + "px) translateZ(0) ");
+                        this.setStyle3(this.pageArr[this.next], 'transform', "translate(0," + (browserInfo.height - diffPos.y * 2.5) + "px) translateZ(0) ");
                     }
                 }
 
@@ -135,13 +135,13 @@
                 this.replaceClass("static", "slide", this.newIndex);
             }
 
-            this.setStyle3(this.pageArr[this.newIndex], 'TransitionDuration', this.duration + "ms");
+            this.setStyle3(this.pageArr[this.newIndex], 'transitionDuration', this.duration + "ms");
 
             if(this.enhance){
-                this.setStyle3(this.pageArr[this.newIndex], 'Transform', "translate(0,0) translateZ(0) rotate(360deg) scale(1)");
-                this.setStyle3(this.pageArr[this.newIndex], 'Opacity', "1");
+                this.setStyle3(this.pageArr[this.newIndex], 'transform', "translate(0,0) translateZ(0) rotate(360deg) scale(1)");
+                this.setStyle3(this.pageArr[this.newIndex], 'opacity', "1");
             }else{
-                this.setStyle3(this.pageArr[this.newIndex], 'Transform', "translate(0,0) translateZ(0)");
+                this.setStyle3(this.pageArr[this.newIndex], 'transform', "translate(0,0) translateZ(0)");
             }
 
             setTimeout(function () {
