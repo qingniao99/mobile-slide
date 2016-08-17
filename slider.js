@@ -31,14 +31,14 @@
         this.animate = options.animate;
 
         this.start = function (e) {
-            if (!this.done) return;
-            this.done = false;
             if (e.targetTouches.length != 1) return;
+            if (!this.done) return;
             var touch = e.targetTouches[0];
             this.startPos = {
                 x: touch.pageX,
                 y: touch.pageY
             }
+            this.done = false;
             this.prev = this.currentIndex - 1;
             this.next = this.currentIndex + 1;
             if (this.prev >= 0) {
@@ -111,15 +111,16 @@
                 y: touch.pageY
             }
 
-            //if (Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 0 && Math.abs(Math.abs(this.endPos.y) - Math.abs(this.startPos.y)) > 0.05 * browserInfo.height) {
+            if(Math.abs(this.startPos.y) - Math.abs(this.endPos.y) == 0){
+                this.removeClass("static", this.prev);
+                this.removeClass("static", this.next);
+                this.done = true;
+                return;
+            }
             if (Math.abs(this.startPos.y) - Math.abs(this.endPos.y) > 33) {
                 this.direct = 1
             } else if(Math.abs(this.endPos.y) - Math.abs(this.startPos.y) > 33) {
                 this.direct = -1;
-            }else{
-                this.removeClass("static", this.prev);
-                this.removeClass("static", this.next);
-                return;
             }
 
             this.toPage();
@@ -129,8 +130,12 @@
         }.bind(this)
 
         this.toPage = function (index) {
+            if(this.direct == 0){this.done = true;return;}
             this.newIndex = this.currentIndex + this.direct;
-            if (this.newIndex < 0 || this.newIndex >= this.pageMax) return this.done = true;
+            if (this.newIndex < 0 || this.newIndex >= this.pageMax){
+                this.done = true;
+                return;
+            }
             if ((this.direct < 0 && this.newIndex >= 0) || (this.direct > 0 && this.newIndex < this.pageMax)) {
                 this.replaceClass("static", "slide", this.newIndex);
             }
